@@ -23,6 +23,8 @@ theme.background.hue_900 = '#121e25'
 
 local awesome_overrides = function(theme)
   --
+  -- Set wallpaper
+  --theme.wallpaper = os.getenv('HOME') .. '/Pictures/some-wallpaper.jpg'
 end
 return {
   theme = theme,
