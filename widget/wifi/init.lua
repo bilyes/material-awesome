@@ -1,8 +1,8 @@
 -------------------------------------------------
--- Battery Widget for Awesome Window Manager
--- Shows the battery status using the ACPI tool
+-- Wifi Widget for Awesome Window Manager
+-- Shows the Wifi signal strength using the WI tool
 -- More details could be found here:
--- https://github.com/streetturtle/awesome-wm-widgets/tree/master/battery-widget
+-- https://github.com/streetturtle/awesome-wm-widgets/tree/master/wifi-widget
 
 -- @author Pavel Makhov
 -- @copyright 2017 Pavel Makhov
@@ -21,7 +21,7 @@ local dpi = require('beautiful').xresources.apply_dpi
 
 local HOME = os.getenv('HOME')
 local PATH_TO_ICONS = HOME .. '/.config/awesome/widget/wifi/icons/'
-local interface = 'wlp3s0'
+local interface = 'wlp5s0'
 local connected = false
 local essid = 'N/A'
 
@@ -35,7 +35,8 @@ local widget =
   layout = wibox.layout.align.horizontal
 }
 
-local widget_button = clickable_container(wibox.container.margin(widget, dpi(14), dpi(14), dpi(4), dpi(4)))
+--local widget_button = clickable_container(wibox.container.margin(widget, dpi(14), dpi(14), dpi(4), dpi(4)))
+local widget_button = clickable_container(wibox.container.margin(widget, dpi(9), dpi(9), dpi(4), dpi(4)))
 widget_button:buttons(
   gears.table.join(
     awful.button(
