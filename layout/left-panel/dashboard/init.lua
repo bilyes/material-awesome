@@ -16,11 +16,12 @@ return function(_, panel)
     },
     wibox.widget {
       text = 'Search Applications',
-      font = 'Roboto medium 13',
+      font = 'Roboto medium 12',
       widget = wibox.widget.textbox
     },
     clickable = true,
-    widget = mat_list_item
+    widget = mat_list_item,
+    forced_height = dpi(36)
   }
 
   search_button:buttons(

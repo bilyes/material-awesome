@@ -5,7 +5,8 @@ local apps = require('configuration.apps')
 local dpi = require('beautiful').xresources.apply_dpi
 
 local left_panel = function(screen)
-  local action_bar_width = dpi(48)
+  --local action_bar_width = dpi(48)
+  local action_bar_width = dpi(36)
   local panel_content_width = dpi(400)
 
   local panel =

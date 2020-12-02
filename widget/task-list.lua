@@ -63,7 +63,8 @@ local function list_update(w, buttons, label, data, objects)
         )
       )
       cb.shape = gears.shape.circle
-      cbm = wibox.container.margin(cb, dpi(4), dpi(8), dpi(12), dpi(12))
+      --cbm = wibox.container.margin(cb, dpi(4), dpi(8), dpi(12), dpi(12))
+      cbm = wibox.container.margin(cb, dpi(4), dpi(8), dpi(8), dpi(8))
       cbm:buttons(
         gears.table.join(
           awful.button(

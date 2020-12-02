@@ -63,7 +63,11 @@ function mat_list_item:layout(_, width, height)
 end
 
 function mat_list_item:fit(_, width)
-  return width, dpi(48)
+  local height = dpi(48)
+  if self._forced_height then
+    height = self._forced_height
+  end
+  return width, height
 end
 
 ---- Properties ----

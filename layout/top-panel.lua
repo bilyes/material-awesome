@@ -26,7 +26,8 @@ local month_calendar = awful.widget.calendar_popup.month({
 })
 month_calendar:attach(textclock)
 
-local clock_widget = wibox.container.margin(textclock, dpi(13), dpi(13), dpi(8), dpi(8))
+--local clock_widget = wibox.container.margin(textclock, dpi(13), dpi(13), dpi(8), dpi(8))
+local clock_widget = wibox.container.margin(textclock, dpi(13), dpi(13), dpi(2), dpi(2))
 
 local add_button = mat_icon_button(mat_icon(icons.plus, dpi(24)))
 add_button:buttons(
@@ -87,17 +88,19 @@ local LayoutBox = function(s)
   return layoutBox
 end
 
+local height_dpi = dpi(36)
+
 local TopPanel = function(s, offset)
   local offsetx = 0
   if offset == true then
-    offsetx = dpi(48)
+    offsetx = height_dpi
   end
   local panel =
     wibox(
     {
       ontop = true,
       screen = s,
-      height = dpi(48),
+      height = height_dpi,
       width = s.geometry.width - offsetx,
       x = s.geometry.x + offsetx,
       y = s.geometry.y,
@@ -105,14 +108,14 @@ local TopPanel = function(s, offset)
       bg = beautiful.background.hue_800,
       fg = beautiful.fg_normal,
       struts = {
-        top = dpi(48)
+        top = height_dpi
       }
     }
   )
 
   panel:struts(
     {
-      top = dpi(48)
+      top = height_dpi
     }
   )
 
