@@ -27,7 +27,8 @@ local temperature_meter =
   wibox.widget {
   wibox.widget {
     icon = icons.thermometer,
-    size = dpi(24),
+    size = dpi(20),
+    --size = dpi(24),
     widget = mat_icon
   },
   slider,
