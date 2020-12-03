@@ -43,6 +43,8 @@ return {
     -- to avoid multipled instances, inside the awspawn script
     '~/.config/awesome/configuration/awspawn', -- Spawn "dirty" apps that can linger between sessions
     -- Key repeat
-    'xset r rate 200 30'
+    'xset r rate 200 30',
+    -- Set color temperature
+    'sct 5000' -- Default is 6500. The lower the warmer
   }
 }

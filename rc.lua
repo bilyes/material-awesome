@@ -16,7 +16,7 @@ require('module.decorate-client')
 -- Backdrop causes bugs on some gtk3 applications
 --require('module.backdrop')
 require('module.exit-screen')
-require('module.quake-terminal')
+--require('module.quake-terminal')
 
 -- Setup all configurations
 require('configuration.client')
