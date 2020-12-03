@@ -18,7 +18,8 @@ return {
     
     -- Editing these also edits the default program
     -- associated with each tag/workspace
-    browser = 'firefox',
+    browser = 'firefox -P default-release',
+    private_browser = 'firefox -P Private',
     editor = 'code', -- gui text editor
     social = 'env discord',
     game = rofi_command,
