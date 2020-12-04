@@ -46,6 +46,6 @@ return {
     -- Key repeat
     'xset r rate 200 30',
     -- Set color temperature
-    'sct 5000' -- Default is 6500. The lower the warmer
+    'sct 4500' -- Default is 6500. The lower the warmer
   }
 }
