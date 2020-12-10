@@ -54,7 +54,7 @@ local function create_textbox(args)
         text = args.text,
         align = args.align or 'left',
         markup = args.markup,
-        forced_width = args.forced_width or 40,
+        forced_width = args.forced_width or 80,
         widget = wibox.widget.textbox
     }
 end
@@ -90,7 +90,7 @@ local function create_kill_process_button()
 end
 
 local function create_row(name, diff_usage)
-    return wibox.widget {
+    local row = wibox.widget {
         create_textbox{text = name},
         create_textbox{text = math.floor(diff_usage) .. '%'},
         {
@@ -111,6 +111,9 @@ local function create_row(name, diff_usage)
         },
         layout  = wibox.layout.ratio.horizontal
     }
+    row:ajust_ratio(2, 0.15, 0.15, 0.7)
+
+    return row
 end
 
 local width = config.width or 50
@@ -195,9 +198,7 @@ function update_widget(widget, stdout)
                 widget:add_value(diff_usage)
             end
 
-            local row = create_row(name, diff_usage)
-            row:ajust_ratio(2, 0.15, 0.15, 0.7)
-            cpu_rows[i] = row
+            cpu_rows[i] = create_row(name, diff_usage)
             i = i + 1
         else
             if is_update == true then
