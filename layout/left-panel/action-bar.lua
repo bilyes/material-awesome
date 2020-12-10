@@ -92,6 +92,7 @@ return function(screen, panel, action_bar_width)
       wibox.container.margin(systray, dpi(10), dpi(10)),
       --require('widget.package-updater'),
       wibox.container.margin(require('widget.weather'), dpi(4), dpi(4), dpi(8), dpi(8)),
+      --wibox.container.margin(require('widget.cpu-widget.cpu-widget'), dpi(1), dpi(1), dpi(8), dpi(8)),
       wibox.container.margin(require('widget.temperature.temperature-widget'), dpi(1), dpi(1), dpi(8), dpi(8)),
       wibox.container.margin(require('widget.ram.ram-widget'), dpi(6), dpi(6), dpi(8), dpi(8)),
       require('widget.wifi'),

@@ -130,6 +130,7 @@ local TopPanel = function(s, offset)
     nil,
     {
       layout = wibox.layout.fixed.horizontal,
+      wibox.container.margin(require('widget.cpu'), dpi(5), dpi(5), dpi(5), dpi(5)),
       -- Clock
       clock_widget,
       -- Layout box
