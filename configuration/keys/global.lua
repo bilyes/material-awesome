@@ -34,16 +34,8 @@ local globalKeys =
     end,
     {description = 'focus previous by index', group = 'client'}
   ),
-  --awful.key(
-    --{modkey},
-    --'r',
-    --function()
-      --_G.screen.primary.left_panel:toggle(true)
-    --end,
-    --{description = 'show main menu', group = 'awesome'}
-  --),
   awful.key(
-    {altkey},
+    {'Shift'},
     'space',
     function()
       awful.spawn(apps.default.rofi_calc)
@@ -51,7 +43,7 @@ local globalKeys =
     {description = 'Open Rofi', group = 'awesome'}
   ),
   awful.key(
-    {'Control'},
+    {altkey},
     'space',
     function()
       --_G.screen.primary.left_panel:toggle(true)
