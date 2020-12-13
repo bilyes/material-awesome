@@ -9,16 +9,15 @@
 -------------------------------------------------
 
 local awful = require("awful")
+local beautiful = require("beautiful")
+local config = require("widget.cpu.config")
+local filesystem = require('gears.filesystem')
+local gears = require("gears")
 local watch = require("awful.widget.watch")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
-local gears = require("gears")
-local config = require("widget.cpu.config")
 
 local CMD = [[sh -c "grep '^cpu.' /proc/stat; ps -eo '%p|%c|%C|' -o "%mem" -o '|%a' --sort=-%cpu ]]
     .. [[| head -11 | tail -n +2"]]
-
-local WIDGET_DIR = os.getenv("HOME") .. '/.config/awesome/widgets/cpu'
 
 local cpu_widget = {}
 local cpu_rows = {
@@ -80,7 +79,7 @@ local function create_kill_process_button()
     return wibox.widget{
         {
             id = "icon",
-            image = WIDGET_DIR .. '/window-close-symbolic.svg',
+            image = filesystem.get_configuration_dir() .. '/widgets/cpu/window-close-symbolic.svg',
             resize = false,
             opacity = 0.1,
             widget = wibox.widget.imagebox
