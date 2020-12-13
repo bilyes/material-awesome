@@ -40,7 +40,7 @@ local globalKeys =
     function()
       awful.spawn(apps.default.rofi_calc)
     end,
-    {description = 'Open Rofi', group = 'awesome'}
+    {description = 'Rofi calculator', group = 'awesome'}
   ),
   awful.key(
     {altkey},
@@ -49,7 +49,7 @@ local globalKeys =
       --_G.screen.primary.left_panel:toggle(true)
       awful.spawn(apps.default.rofi)
     end,
-    {description = 'Rofi calculation', group = 'awesome'}
+    {description = 'Open Rofi', group = 'awesome'}
   ),
   awful.key({modkey}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
   awful.key(
