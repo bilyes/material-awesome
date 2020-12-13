@@ -34,21 +34,30 @@ local globalKeys =
     end,
     {description = 'focus previous by index', group = 'client'}
   ),
-  awful.key(
-    {modkey},
-    'r',
-    function()
-      _G.screen.primary.left_panel:toggle(true)
-    end,
-    {description = 'show main menu', group = 'awesome'}
-  ),
+  --awful.key(
+    --{modkey},
+    --'r',
+    --function()
+      --_G.screen.primary.left_panel:toggle(true)
+    --end,
+    --{description = 'show main menu', group = 'awesome'}
+  --),
   awful.key(
     {altkey},
     'space',
     function()
-      _G.screen.primary.left_panel:toggle(true)
+      awful.spawn(apps.default.rofi_calc)
     end,
-    {description = 'show main menu', group = 'awesome'}
+    {description = 'Open Rofi', group = 'awesome'}
+  ),
+  awful.key(
+    {'Control'},
+    'space',
+    function()
+      --_G.screen.primary.left_panel:toggle(true)
+      awful.spawn(apps.default.rofi)
+    end,
+    {description = 'Rofi calculation', group = 'awesome'}
   ),
   awful.key({modkey}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
   awful.key(
