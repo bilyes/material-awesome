@@ -1,5 +1,5 @@
 ## Material and Mouse driven theme for [AwesomeWM 4.3](https://awesomewm.org/)
-### Original work by PapyElGringo, official development seem to have moved to [material-shell](https://github.com/PapyElGringo/material-shell)
+# Original work by PapyElGringo, official development seem to have moved to [material-shell](https://github.com/PapyElGringo/material-shell)
 
 Note: This fork focuses on streamlining the config and adding some Quality of Life touches to the theme.
 
@@ -35,13 +35,7 @@ An almost desktop environment made with [AwesomeWM](https://awesomewm.org/) foll
 ### 2) Clone the configuration
 
 ```
-git clone https://github.com/HikariKnight/material-awesome.git ~/.config/awesome
-```
-
-> Awesome 4.3 is so new that most of the distributions have not updated it yet. If you want to install this config on Awesome 4.2 (current version on depo) use the specific awesome-4.2 branch (not in development by me)
-
-```
-git clone -b awesome-4.2 https://github.com/PapyElGringo/material-awesome.git ~/.config/awesome
+git clone https://github.com/ilyessbachiri/material-awesome.git ~/.config/awesome
 ```
 
 ### 3) Set the themes
