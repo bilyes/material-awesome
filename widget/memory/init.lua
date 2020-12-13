@@ -6,14 +6,13 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
---local naughty = require("naughty")
+local dpi = require('beautiful').xresources.apply_dpi
 
 local root = os.getenv("HOME") .. "/.config/awesome/widget/memory/"
 
 local font_name = beautiful.font:gsub("%s%d+$", "")
 --local font_name = config.font_name or beautiful.font:gsub("%s%d+$", "")
 
---local last_id
 widget = wibox.widget.textbox()
 
 function get_color(memory_usage)
@@ -54,32 +53,7 @@ function testmem()
     return "N/A" -- something failed
 end
 
--- to display on hover event
---local summary = nil
---function show_tooltip()
-    --local font = 'monospace 8'
-    --local text_color = '#FFFFFF'
-    --local fd = io.popen(root .. "mem.sh summary")
-    --local str = fd:read("*all")
-    --local content = string.format('<span font="%s" foreground="%s">%s</span>', font, text_color, str)
-    --summary = naughty.notify({
-----        title = "Memory Usage",
-        --text = content,
-        --timeout = 0,
-        --hover_timeout = 0.5,
-        --width = 60*8
-    --})
---end
-
---function hide_tooltip()
-    --if summary ~= nil then
-        --naughty.destroy(summary)
-    --end
---end
-
 widget:set_markup(testmem())
---widget:connect_signal("mouse::enter", show_tooltip)
---widget:connect_signal("mouse::leave", hide_tooltip)
 
 -- update every 30 secs
 memtimer = timer({ timeout = 30 })
@@ -90,12 +64,11 @@ memtimer:start()
 
 return wibox.widget {
     {
-        id = 'icon',
         resize = true,
         widget = wibox.widget.imagebox,
         image = root .. '/icons/memory-stick.png'
     },
     widget,
-    spacing = 6,
+    spacing = dpi(3),
     layout = wibox.layout.fixed.horizontal
 }

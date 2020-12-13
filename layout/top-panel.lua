@@ -131,8 +131,8 @@ local TopPanel = function(s, offset)
     {
       layout = wibox.layout.fixed.horizontal,
       wibox.container.margin(require('widget.memory'), dpi(5), dpi(5), dpi(8), dpi(8)),
-      wibox.container.margin(require('widget.temperature.temperature-widget'), dpi(1), dpi(1), dpi(5), dpi(5)),
-      wibox.container.margin(require('widget.cpu'), dpi(5), dpi(5), dpi(5), dpi(5)),
+      wibox.container.margin(require('widget.temperature'), dpi(5), dpi(5), dpi(8), dpi(8)),
+      wibox.container.margin(require('widget.cpu'), dpi(5), dpi(5), dpi(8), dpi(8)),
       -- Clock
       clock_widget,
       -- Layout box
