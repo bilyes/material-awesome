@@ -3,13 +3,13 @@ local filesystem = require('gears.filesystem')
 -- Thanks to jo148 on github for making rofi dpi aware!
 local with_dpi = require('beautiful').xresources.apply_dpi
 local get_dpi = require('beautiful').xresources.get_dpi
-local rofi_command = 'env /usr/bin/rofi -dpi ' .. get_dpi() .. ' -width ' .. with_dpi(400) .. ' -theme ' .. filesystem.get_configuration_dir() .. '/configuration/rofi-material.rasi'
+local rofi_command = 'env /usr/bin/rofi -dpi ' .. get_dpi() .. ' -width ' .. with_dpi(400)
 
 return {
   -- List of apps to start by default on some actions
   default = {
     terminal = 'alacritty',
-    rofi = rofi_command .. ' -combi-modi window,drun -show combi -modi combi -run-command "/bin/bash -c -i \'shopt -s expand_aliases; {cmd}\'"',
+    rofi = rofi_command .. ' -show combi',
     rofi_calc = rofi_command .. [[ -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -in -selection clipboard"]],
     lock = 'i3lock-fancy',
     quake = 'alacritty',
