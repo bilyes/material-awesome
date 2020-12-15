@@ -2,20 +2,24 @@
 -- Weather Widget based on the OpenWeatherMap
 -- https://openweathermap.org/
 --
--- @author Pavel Makhov
--- @copyright 2020 Pavel Makhov
+-- @author Ilyess Bachiri
+-- @copyright 2021 Ilyess Bachiri
 -------------------------------------------------
 local awful = require("awful")
-local watch = require("awful.widget.watch")
+local beautiful = require("beautiful")
+local dpi = require('beautiful').xresources.apply_dpi
+local filesystem = require('gears.filesystem')
+local gears = require("gears")
 local json = require("json")
 local naughty = require("naughty")
+local watch = require("awful.widget.watch")
 local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
+
 local config = require('widget.weather.config')
 
-local WIDGET_DIR = os.getenv("HOME") .. '/.config/awesome/widget/weather'
-local GET_FORECAST_CMD = [[bash -c "curl -s --show-error -X GET '%s'"]]
+local widget_dir = filesystem.get_configuration_dir() .. '/widget/weather'
+
+local get_forecast_cmd = [[bash -c "curl -s --show-error -X GET '%s'"]]
 
 local function show_warning(message)
     naughty.notify {
@@ -32,7 +36,7 @@ local tooltip = awful.tooltip {
     preferred_positions = {'bottom'}
 }
 
-local popup_width = 500
+local popup_width = dpi(280)
 
 local weather_popup = awful.popup {
     ontop = true,
@@ -116,7 +120,7 @@ local icon_pack_name = config.icons or 'weather-underground-icons'
 local icons_extension = config.icons_extension or '.png'
 local timeout = config.timeout or 120
 
-local ICONS_DIR = WIDGET_DIR .. '/icons/' .. icon_pack_name .. '/'
+local icons_dir = widget_dir .. '/icons/' .. icon_pack_name .. '/'
 local owm_one_cal_api =
     ('https://api.openweathermap.org/data/2.5/onecall' ..
         '?lat=' .. coordinates[1] .. '&lon=' .. coordinates[2] .. '&appid=' .. api_key ..
@@ -136,6 +140,7 @@ weather_widget = wibox.widget {
     },
     {
         id = 'txt',
+        font = font_name .. ' 8',
         widget = wibox.widget.textbox
     },
     layout = wibox.layout.fixed.vertical,
@@ -162,8 +167,8 @@ local current_weather_widget = wibox.widget {
             {
                 id = 'icon',
                 resize = true,
-                forced_width = 128,
-                forced_height = 128,
+                forced_width = dpi(100),
+                forced_height = dpi(100),
                 widget = wibox.widget.imagebox
             },
             align = 'center',
@@ -182,7 +187,7 @@ local current_weather_widget = wibox.widget {
         {
             {
                 id = 'temp',
-                font = font_name .. ' 36',
+                font = font_name .. ' 34',
                 widget = wibox.widget.textbox
             },
             {
@@ -220,7 +225,7 @@ local current_weather_widget = wibox.widget {
     layout = wibox.layout.flex.horizontal,
     update = function(self, weather)
         self:get_children_by_id('icon')[1]:set_image(
-            ICONS_DIR .. icon_map[weather.weather[1].icon] .. icons_extension)
+            icons_dir .. icon_map[weather.weather[1].icon] .. icons_extension)
         self:get_children_by_id('temp')[1]:set_text(gen_temperature_str(weather.temp, '%.0f', false, units))
         self:get_children_by_id('feels_like_temp')[1]:set_text(
             'Feels like ' .. gen_temperature_str(weather.feels_like, '%.0f', false, units))
@@ -234,7 +239,7 @@ local current_weather_widget = wibox.widget {
 
 
 local daily_forecast_widget = {
-    forced_width = 300,
+    --forced_width = 300,
     layout = wibox.layout.flex.horizontal,
     update = function(self, forecast, timezone_offset)
         local count = #self
@@ -251,10 +256,10 @@ local daily_forecast_widget = {
                 {
                     {
                         {
-                            image = ICONS_DIR .. icon_map[day.weather[1].icon] .. icons_extension,
+                            image = icons_dir .. icon_map[day.weather[1].icon] .. icons_extension,
                             resize = true,
-                            forced_width = 48,
-                            forced_height = 48,
+                            forced_width = dpi(30),
+                            forced_height = dpi(30),
                             widget = wibox.widget.imagebox
                         },
                         align = 'center',
@@ -292,7 +297,7 @@ local daily_forecast_widget = {
     end
 }
 
-local graph_height = 100
+local graph_height = dpi(50)
 
 local hourly_forecast_graph = wibox.widget {
     step_width = popup_width / 25,
@@ -475,14 +480,14 @@ local function update_widget(widget, stdout, stderr)
 
     local result = json.decode(stdout)
 
-    widget:set_image(ICONS_DIR .. icon_map[result.current.weather[1].icon] .. icons_extension)
+    widget:set_image(icons_dir .. icon_map[result.current.weather[1].icon] .. icons_extension)
     widget:set_text(gen_temperature_str(result.current.temp, '%.0f', both_units_widget, units))
 
     current_weather_widget:update(result.current)
 
     local final_widget = {
         current_weather_widget,
-        spacing = 16,
+        spacing = dpi(10),
         layout = wibox.layout.fixed.vertical
     }
 
@@ -499,7 +504,7 @@ local function update_widget(widget, stdout, stderr)
     weather_popup:setup({
         {
             final_widget,
-            margins = 10,
+            margins = dpi(6),
             widget = wibox.container.margin
         },
         bg = beautiful.bg_normal,
@@ -516,7 +521,7 @@ weather_widget:buttons(awful.util.table.join(awful.button({}, 1, function()
     end)))
 
 watch(
-    string.format(GET_FORECAST_CMD, owm_one_cal_api),
+    string.format(get_forecast_cmd, owm_one_cal_api),
     timeout,  -- API limit is 1k req/day; day has 1440 min; every 2 min is good
     update_widget,
     weather_widget

@@ -2,10 +2,10 @@
 -- CPU Widget for Awesome Window Manager
 -- Shows the current CPU utilization
 -- More details could be found here:
--- https://github.com/streetturtle/awesome-wm-widgets/tree/master/cpu-widget
+-- https://github.com/ilyessbachiri/material-awesome/tree/master/widget/cpu
 
--- @author Pavel Makhov
--- @copyright 2020 Pavel Makhov
+-- @author Ilyess BAchiri
+-- @copyright 2021 Ilyess Bachiri
 -------------------------------------------------
 
 local awful = require("awful")
@@ -18,6 +18,14 @@ local wibox = require("wibox")
 
 local CMD = [[sh -c "grep '^cpu.' /proc/stat; ps -eo '%p|%c|%C|' -o "%mem" -o '|%a' --sort=-%cpu ]]
     .. [[| head -11 | tail -n +2"]]
+
+local width = config.width or 50
+local step_width = config.step_width or 2
+local step_spacing = config.step_spacing or 1
+local color = config.color or beautiful.fg_normal
+local enable_kill_button = config.enable_kill_button or false
+local process_info_max_length = config.process_info_max_length or -1
+local timeout = config.timeout or 1
 
 local cpu_widget = {}
 local cpu_rows = {
@@ -115,13 +123,50 @@ local function create_row(name, diff_usage)
     return row
 end
 
-local width = config.width or 50
-local step_width = config.step_width or 2
-local step_spacing = config.step_spacing or 1
-local color = config.color or beautiful.fg_normal
-local enable_kill_button = config.enable_kill_button or false
-local process_info_max_length = config.process_info_max_length or -1
-local timeout = config.timeout or 1
+local function create_pid_name_row(pid, comm, cpu, mem, enable_kill_button)
+    local kill_proccess_button = enable_kill_button and create_kill_process_button() or nil
+
+    local pid_name_rest = wibox.widget{
+        create_textbox{text = pid},
+        create_textbox{text = comm},
+        {
+            create_textbox{text = cpu, align = 'center'},
+            create_textbox{text = mem, align = 'center'},
+            kill_proccess_button,
+            layout = wibox.layout.fixed.horizontal
+        },
+        layout  = wibox.layout.ratio.horizontal
+    }
+    pid_name_rest:ajust_ratio(2, 0.2, 0.47, 0.33)
+
+    return wibox.widget {
+        {
+            pid_name_rest,
+            top = 4,
+            bottom = 4,
+            widget = wibox.container.margin
+        },
+        widget = wibox.container.background
+    }
+end
+
+local function create_row_tooltip(row, cmd, process_info_max_length)
+    awful.tooltip {
+        objects = { row },
+        mode = 'outside',
+        preferred_positions = {'bottom'},
+        timer_function = function()
+            local text = cmd
+            if process_info_max_length > 0 and text:len() > process_info_max_length then
+                text = text:sub(0, process_info_max_length - 3) .. '...'
+            end
+
+            return text
+            :gsub('%s%-', '\n\t-') -- put arguments on a new line
+            :gsub(':/', '\n\t\t:/') -- java classpath uses : to separate jars
+        end,
+    }
+end
 
 local cpugraph_widget = wibox.widget {
     max_value = 100,
@@ -210,30 +255,7 @@ function update_widget(widget, stdout)
                 local mem = columns[4]
                 local cmd = columns[5]
 
-                local kill_proccess_button = enable_kill_button and create_kill_process_button() or nil
-
-                local pid_name_rest = wibox.widget{
-                    create_textbox{text = pid},
-                    create_textbox{text = comm},
-                    {
-                        create_textbox{text = cpu, align = 'center'},
-                        create_textbox{text = mem, align = 'center'},
-                        kill_proccess_button,
-                        layout = wibox.layout.fixed.horizontal
-                    },
-                    layout  = wibox.layout.ratio.horizontal
-                }
-                pid_name_rest:ajust_ratio(2, 0.2, 0.47, 0.33)
-
-                local row = wibox.widget {
-                    {
-                        pid_name_rest,
-                        top = 4,
-                        bottom = 4,
-                        widget = wibox.container.margin
-                    },
-                    widget = wibox.container.background
-                }
+                local row = create_pid_name_row(pid, comm, cpu, mem, enable_kill_button)
 
                 row:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.bg_focus) end)
                 row:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.bg_normal) end)
@@ -249,27 +271,10 @@ function update_widget(widget, stdout)
                         end) ) )
                 end
 
-                awful.tooltip {
-                    objects = { row },
-                    mode = 'outside',
-                    preferred_positions = {'bottom'},
-                    timer_function = function()
-                        local text = cmd
-                        if process_info_max_length > 0 and text:len() > process_info_max_length then
-                            text = text:sub(0, process_info_max_length - 3) .. '...'
-                        end
-
-                        return text
-                                :gsub('%s%-', '\n\t-') -- put arguments on a new line
-                                :gsub(':/', '\n\t\t:/') -- java classpath uses : to separate jars
-                    end,
-                }
-
+                create_row_tooltip(row, cmd, process_info_max_length)
                 process_rows[j] = row
-
                 j = j + 1
             end
-
         end
     end
     popup:setup {
