@@ -4,6 +4,7 @@ local filesystem = require('gears.filesystem')
 local with_dpi = require('beautiful').xresources.apply_dpi
 local get_dpi = require('beautiful').xresources.get_dpi
 local rofi_command = 'env /usr/bin/rofi -dpi ' .. get_dpi() .. ' -width ' .. with_dpi(600)
+local screenshot_command = filesystem.get_configuration_dir() .. '/configuration/utils/screenshot'
 
 return {
   -- List of apps to start by default on some actions
@@ -13,9 +14,9 @@ return {
     rofi_calc = rofi_command .. [[ -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -in -selection clipboard"]],
     lock = 'i3lock-fancy',
     quake = 'alacritty',
-    screenshot = '~/.config/awesome/configuration/utils/screenshot -m',
-    region_screenshot = '~/.config/awesome/configuration/utils/screenshot -r',
-    delayed_screenshot = '~/.config/awesome/configuration/utils/screenshot --delayed -r',
+    screenshot = screenshot_command .. ' -m',
+    region_screenshot = screenshot_command .. ' -r',
+    delayed_screenshot = screenshot_command .. ' --delayed -r',
     
     -- Editing these also edits the default program
     -- associated with each tag/workspace
@@ -44,8 +45,6 @@ return {
     -- Add applications that need to be killed between reloads
     -- to avoid multipled instances, inside the awspawn script
     '~/.config/awesome/configuration/awspawn', -- Spawn "dirty" apps that can linger between sessions
-    -- Key repeat
-    'xset r rate 200 30',
     -- Set color temperature
     'sct 4500' -- Default is 6500. The lower the warmer
   }
