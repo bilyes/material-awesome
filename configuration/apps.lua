@@ -31,7 +31,7 @@ return {
   -- List of apps to start once on start-up
   run_on_start_up = {
     --'compton --config ' .. filesystem.get_configuration_dir() .. '/configuration/compton.conf',
-    'picom',
+    'picom --experimental-backends',
     'nm-applet --indicator', -- wifi
     --'blueberry-tray', -- Bluetooth tray icon
     --'xfce4-power-manager', -- Power manager
@@ -46,6 +46,6 @@ return {
     -- to avoid multipled instances, inside the awspawn script
     '~/.config/awesome/configuration/awspawn', -- Spawn "dirty" apps that can linger between sessions
     -- Set color temperature
-    'sct 4500' -- Default is 6500. The lower the warmer
+    'sct 4500', -- Default is 6500. The lower the warmer
   }
 }
