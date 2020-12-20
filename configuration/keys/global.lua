@@ -121,16 +121,16 @@ local globalKeys =
     {modkey},
     'b',
     function()
-      awful.util.spawn(apps.default.browser)
+      awful.util.spawn(apps.default.browser, {tag = mouse.screen.tags[1]})
     end,
     {description = 'open a browser', group = 'launcher'}
   ),
-  -- Open private browser/brave
+  -- Open private browser
   awful.key(
     {modkey},
     'p',
     function()
-      awful.util.spawn_with_shell(apps.default.private_browser)
+      awful.util.spawn(apps.default.private_browser, {tag = mouse.screen.tags[8]})
     end,
     {description = 'Open private browser', group = 'launcher'}
   ),
@@ -139,7 +139,7 @@ local globalKeys =
     {modkey},
     'x',
     function()
-      awful.util.spawn_with_shell(apps.default.terminal)
+      awful.util.spawn(apps.default.terminal, {tag = mouse.screen.tags[2]})
     end,
     {description = 'open a terminal', group = 'launcher'}
   ),
