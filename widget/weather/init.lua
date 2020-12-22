@@ -141,6 +141,7 @@ weather_widget = wibox.widget {
     {
         id = 'txt',
         font = font_name .. ' 8',
+        align = 'center',
         widget = wibox.widget.textbox
     },
     layout = wibox.layout.fixed.vertical,

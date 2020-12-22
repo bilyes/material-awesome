@@ -1,0 +1,8 @@
+{
+    "operationName": "getQuoteBySymbol",
+    "variables": {
+        "symbol": "%SYMBOL%",
+        "locale": "en"
+    },
+    "query": "query getQuoteBySymbol($symbol: String, $locale: String) {\n  getQuoteBySymbol(symbol: $symbol, locale: $locale) {\n    symbol\n    name\n    price\n    priceChange\n    percentChange\n    exShortName\n    exchangeCode\n    openPrice\n    dayHigh\n    dayLow\n    prevClose\n    dividendFrequency\n    dividendYield\n    dividendAmount\n    dividendCurrency\n    weeks52high\n    weeks52low\n    __typename\n  }\n}\n"
+}

@@ -1,0 +1,19 @@
+Mon Dec 21 08:29:35 PM EST 2020  Error: Missing symbol. Usage: fetch-quotes.sh SYMBOL
+Mon Dec 21 08:30:15 PM EST 2020  Error: Missing symbol. Usage: fetch-quotes.sh SYMBOL
+Mon Dec 21 08:40:51 PM EST 2020 INFO: Retrieving from cache
+Mon Dec 21 08:42:12 PM EST 2020  ERROR: Missing symbol. Usage: fetch-quotes.sh SYMBOL
+Mon Dec 21 08:43:25 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 08:49:19 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 08:49:44 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 08:58:18 PM EST 2020  ERROR: Missing symbol. Usage: fetch-quotes.sh SYMBOL
+Mon Dec 21 09:02:06 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 09:02:27 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 09:02:53 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 09:07:29 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 09:07:56 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 09:26:14 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 09:26:52 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 10:01:36 PM EST 2020  INFO: All right let's see 
+Mon Dec 21 10:01:36 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 10:02:19 PM EST 2020  INFO: Retrieving from cache
+Mon Dec 21 10:05:56 PM EST 2020  INFO: Retrieving from cache

@@ -1,1 +1,4 @@
 widget/weather/config.lua
+widget/stock/cache/
+widget/stock/config.lua
+widget/stock/fetch-quotes.log
