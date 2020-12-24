@@ -1,26 +1,20 @@
 -------------------------------------------------
 -- Wifi Widget for Awesome Window Manager
 -- Shows the Wifi signal strength using the WI tool
--- More details could be found here:
--- https://github.com/streetturtle/awesome-wm-widgets/tree/master/wifi-widget
 
--- @author Pavel Makhov
--- @copyright 2017 Pavel Makhov
+-- @author Ilyess Bachiri
+-- @copyright 2021-present Ilyess Bachiri
 -------------------------------------------------
 
 local awful = require('awful')
+local clickable_container = require('widget.material.clickable-container')
+local dpi = require('beautiful').xresources.apply_dpi
+local filesystem = require('gears.filesystem')
+local gears = require('gears')
 local watch = require('awful.widget.watch')
 local wibox = require('wibox')
-local clickable_container = require('widget.material.clickable-container')
-local gears = require('gears')
-local dpi = require('beautiful').xresources.apply_dpi
 
--- acpi sample outputs
--- Battery 0: Discharging, 75%, 01:51:38 remaining
--- Battery 0: Charging, 53%, 00:57:43 until charged
-
-local HOME = os.getenv('HOME')
-local PATH_TO_ICONS = HOME .. '/.config/awesome/widget/wifi/icons/'
+local PATH_TO_ICONS = filesystem.get_configuration_dir() .. '/widget/wifi/icons/'
 local interface = 'wlp5s0'
 local connected = false
 local essid = 'N/A'
@@ -82,27 +76,31 @@ local function grabText()
   end
 end
 
+local function get_icon_name(wifi_strength)
+  local iconName = 'wifi-strength'
+
+  if (wifi_strength == nil) then
+      return iconName .. '-off'
+  end
+
+  return iconName .. '-' .. math.floor(wifi_strength / 25 + 0.5)
+end
+
+local update_widget = function(_, stdout)
+  local wifi_strength = tonumber(stdout)
+
+  widget.icon:set_image(PATH_TO_ICONS .. get_icon_name(wifi_strength) .. '.svg')
+
+  if ((wifi_strength ~= nil) and (essid == 'N/A' or essid == nil)) then
+    grabText()
+  end
+  collectgarbage('collect')
+end
+
 watch(
   "awk 'NR==3 {printf \"%3.0f\" ,($3/70)*100}' /proc/net/wireless",
   5,
-  function(_, stdout)
-    local widgetIconName = 'wifi-strength'
-    local wifi_strength = tonumber(stdout)
-    if (wifi_strength ~= nil) then
-      connected = true
-      -- Update popup text
-      local wifi_strength_rounded = math.floor(wifi_strength / 25 + 0.5)
-      widgetIconName = widgetIconName .. '-' .. wifi_strength_rounded
-      widget.icon:set_image(PATH_TO_ICONS .. widgetIconName .. '.svg')
-    else
-      connected = false
-      widget.icon:set_image(PATH_TO_ICONS .. widgetIconName .. '-off' .. '.svg')
-    end
-    if (connected and (essid == 'N/A' or essid == nil)) then
-      grabText()
-    end
-    collectgarbage('collect')
-  end,
+  update_widget,
   widget
 )
 

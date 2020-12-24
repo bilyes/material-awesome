@@ -35,7 +35,7 @@ local globalKeys =
     {description = 'focus previous by index', group = 'client'}
   ),
   awful.key(
-    {'Shift'},
+    {'Control'},
     'space',
     function()
       awful.spawn(apps.default.rofi_calc)

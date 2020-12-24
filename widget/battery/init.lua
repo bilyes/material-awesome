@@ -78,7 +78,7 @@ end
 
 local last_battery_check = os.time()
 
-function get_icon_name(charge)
+local function get_icon_name(charge)
   local iconName = 'battery'
 
   if status == 'Charging' or status == 'Full' then
